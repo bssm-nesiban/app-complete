@@ -1,27 +1,60 @@
-import React from 'react';
 import { Image, Button, SafeAreaView, StyleSheet, TextInput, View, Alert, TouchableOpacity, onPress, Text, Dimensions } from 'react-native';
+import React, { useState } from 'react';
+import axios from "axios";
 
-const loginscreen = () => {
+
+function Loginscreen({navigation}) {
+
+    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("")
+
+    function login() {
+        if(email.trim() === ""){
+            Alert.alert("이메일을 입력하세요!")
+        }
+        else if(password.trim() === ""){
+            Alert.alert("비밀번호를 입력하세요!")
+        } else {
+            axios.post("http://10.150.151.211:8080/login",
+                {
+                    email,
+                    password,
+                }
+            ).then(function(resp)
+                {
+                    if(resp.data === true) {
+                        setEmail("")
+                        setPassword("")
+                        Alert.alert("로그인 성공!")
+
+                    }
+                }
+            ).catch(function(err)
+            {console.log(`Error Message: ${err}`)
+            })
+        }
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.card}>
 
                 <Image style={styles.img} source={require('../images/logo.png')}/>
 
-                <TextInput style={styles.input} placeholder="이메일을 입력하세요" />
-                <TextInput style={styles.input} placeholder="비밀번호를 입력하세요" />
+                <TextInput style={styles.input} placeholder="이메일을 입력하세요" onChangeText={(email) => setEmail(email)} value={email}/>
+                <TextInput style={styles.input} placeholder="비밀번호를 입력하세요" onChangeText={(password) => setPassword(password)} value={password}/>
 
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={onPress}
+                        onPress={() => navigation.navigate("Main")}
                     >
                         <Text style={styles.buttonText}>로그인</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={onPress}
+                        onPress={() => navigation.navigate("Signup")}
                     >
                         <Text style={styles.buttonText}>회원가입</Text>
                     </TouchableOpacity>
@@ -77,4 +110,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default loginscreen;
+export default Loginscreen;

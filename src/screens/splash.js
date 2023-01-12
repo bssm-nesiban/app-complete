@@ -38,7 +38,7 @@ export default function Splash({ navigation }) {
       // we hide the splash screen once we know the root view has already
       // performed layout.
       await SplashScreen.hideAsync();
-      navigation.navigate("Main");
+      navigation.navigate("Login");
     }
   }, [appIsReady]);
 

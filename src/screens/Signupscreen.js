@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, onPress, SafeAreaView, StyleSheet, TextInput, View, Text} from 'react-native';
 
-const App = () => {
+function Signupscreen({navigation}) {
     return (
         <SafeAreaView style={styles.container}>
             <TextInput style={styles.input} placeholder="이메일을 입력하세요" />
@@ -10,7 +10,7 @@ const App = () => {
             <TextInput style={styles.input} placeholder="비밀번호 확인" />
             <TouchableOpacity
                 style={styles.signup}
-                onPress={onPress}
+                onPress={() => navigation.navigate("Login")}
             >
                 <Text style={styles.buttonText}>회원가입</Text>
             </TouchableOpacity>
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     },
 
     signup: {
-        width: '100%',
+        width: 320,
         borderRadius: 10,
         backgroundColor: '#7198FF',
         fontSize: 18,
@@ -45,13 +45,13 @@ const styles = StyleSheet.create({
 
 
     input: {
-        width: '100%',
         borderBottomColor: '#bbb',
         borderBottomWidth: 1,
         fontSize: 17,
         marginBottom: 55,
         paddingBottom: 5,
+        width : 320,
     },
 });
 
-export default App;
+export default Signupscreen;
